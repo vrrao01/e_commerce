@@ -9,7 +9,10 @@ Homepage
 {% endblock%}
 
 {%block content%}
-<div class="container">
+{% include "home/sidebar.html"%}
+
+<div class="col-lg-9">
+  <div class="container">
           <h2 class="my-4">Offers</h2>
         </div>
         <div id="carouselExampleIndicators" class="carousel slide my-4" data-ride="carousel">
@@ -140,4 +143,6 @@ Homepage
           </div>
 
         </div>
+</div>
+
 {%endblock%}

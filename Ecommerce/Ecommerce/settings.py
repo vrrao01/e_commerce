@@ -39,7 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
+    'accounts.apps.AccountsConfig',
+    'crispy_forms',
+
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -71,7 +77,8 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'Ecommerce.wsgi.application'
 
-
+LOGIN_REDIRECT_URL = 'home:homepage'
+LOGOUT_REDIRECT_URL = 'home:homepage'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
