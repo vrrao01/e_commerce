@@ -1,0 +1,21 @@
+{% extends "accounts/base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block title_name %}
+	Sign Up
+{% endblock %}
+
+{% block nav_account %}
+	active
+{% endblock %}
+
+{% block content %}
+
+		<div class="container text-center my-5">
+			{% csrf_token %}
+				 {% crispy form %}
+
+		</div>
+
+{% endblock%}
