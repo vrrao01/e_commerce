@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.urls import path,include
 from .views import registration
+from .decorators import not_logged_in 
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('signup/',registration,name="signup"),
+    path('login/', not_logged_in(auth_views.LoginView.as_view()),name='login')
 ]

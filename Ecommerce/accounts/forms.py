@@ -36,3 +36,4 @@ class RegistrationForm(UserCreationForm):
 					),
 				Submit('submit', 'Sign Up')
 			)
+

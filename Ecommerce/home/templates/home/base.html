@@ -47,11 +47,10 @@
             <a class="nav-link" href="#">Shop</a>
           </li>
           <li class="nav-item {%block nav_account%}{%endblock%}">
-            <a class="nav-link" href="#">
               {% if user.is_authenticated %}
-              {{user.first_name}}
+               <a class="nav-link" href="#"> {{user.first_name}}
               {% else %}
-              Sign In
+              <a class="nav-link" href="{% url 'login' %}"> Sign In
               {% endif %}
                <i class="fas fa-user"></i>
             </a>

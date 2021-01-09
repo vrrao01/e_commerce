@@ -2,7 +2,9 @@ from django.shortcuts import render,redirect
 from django.http import HttpResponse
 from .forms import RegistrationForm
 from django.contrib.auth.models import User,Group
+from .decorators import not_logged_in
 # Create your views here.
+@not_logged_in
 def registration(request):
 	template_name= "registration/signup.html"
 	form = RegistrationForm()
@@ -19,4 +21,3 @@ def registration(request):
 	context ={'form':form,}
 	return render(request,template_name,context)
 
-	
