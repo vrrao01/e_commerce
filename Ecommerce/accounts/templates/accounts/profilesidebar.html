@@ -2,7 +2,7 @@
 
 <div class = "col-lg-3">
 	<div class="list-group list-group-flush">
-	  <a href="#" class="list-group-item list-group-item-action list-group-item-info {% if active == 'profile' %}active{% endif %}">Profile</a>
+	  <a href="{% url 'profile' %}" class="list-group-item list-group-item-action list-group-item-info {% if active == 'profile' %}active{% endif %}">Profile</a>
 	  <a href="#" class="list-group-item list-group-item-action list-group-item-info">Shipping Addresses</a>
 	  <a href="#" class="list-group-item list-group-item-action list-group-item-info">Orders</a>
 	  <a href="{% url 'logout' %}" class = 'list-group-item list-group-item-action list-group-item-info'> Log Out</a>
