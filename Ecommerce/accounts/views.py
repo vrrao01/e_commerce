@@ -1,8 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,get_object_or_404
 from django.http import HttpResponse
 from .forms import RegistrationForm
 from django.contrib.auth.models import User,Group
 from .decorators import not_logged_in
+from django.views.generic import UpdateView
+from django.shortcuts import reverse
+
 # Create your views here.
 @not_logged_in
 def registration(request):
@@ -14,10 +17,21 @@ def registration(request):
 			user = form.save()
 			group = Group.objects.get(name=form.cleaned_data['user_type'])
 			user.groups.add(group)
-			deliveryaddress = form.cleaned_data['address']
-			user.userprofile.address = deliveryaddress
+			# deliveryaddress = form.cleaned_data['address']
+			# user.userprofile.address = deliveryaddress
 			user.userprofile.save()
 			return redirect('login')
 	context ={'form':form,}
 	return render(request,template_name,context)
 
+class UpdateProfileView(UpdateView):
+	model = User
+	fields = ['username','first_name','last_name']
+	template_name = 'accounts/editprofile.html'
+	context_object_name = 'userprofile'
+
+	def get_success_url(self):
+		return reverse('home:homepage')
+
+	def get_object(self):
+		return get_object_or_404(User,username=self.request.user.username)

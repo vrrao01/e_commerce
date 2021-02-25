@@ -17,8 +17,13 @@ from django.urls import path,include
 from .views import registration
 from .decorators import not_logged_in 
 from django.contrib.auth import views as auth_views
+from .views import UpdateProfileView
+from django.contrib.auth.decorators import login_required
+
 
 urlpatterns = [
     path('signup/',registration,name="signup"),
-    path('login/', not_logged_in(auth_views.LoginView.as_view()),name='login')
+    path('login/', not_logged_in(auth_views.LoginView.as_view()),name='login'),
+    path('logout/',auth_views.LogoutView.as_view(),name="logout"),
+    path('edit/',login_required(UpdateProfileView.as_view()),name="editprofile")
 ]
