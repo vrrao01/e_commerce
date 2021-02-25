@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from .forms import RegistrationForm
 from django.contrib.auth.models import User,Group
 from .decorators import not_logged_in
-from django.views.generic import UpdateView
+from django.views.generic import UpdateView, DetailView
 from django.shortcuts import reverse
 
 # Create your views here.
@@ -31,7 +31,16 @@ class UpdateProfileView(UpdateView):
 	context_object_name = 'userprofile'
 
 	def get_success_url(self):
-		return reverse('home:homepage')
+		return reverse('profile')
 
 	def get_object(self):
 		return get_object_or_404(User,username=self.request.user.username)
+
+
+class UserProfileView(DetailView):
+	model = User
+	context_object_name = 'userprofile'
+	template_name = 'accounts/profile.html'
+
+	def get_object(self):
+		return get_object_or_404(User,username= self.request.user.username)
