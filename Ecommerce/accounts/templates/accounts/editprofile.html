@@ -11,8 +11,6 @@ Edit Profile
 {% block content %}
 {% include 'accounts/profilesidebar.html' with active='profile' %}
 
-
-
 <div class="col-lg-9">
 	<form method = "post">
 		{% csrf_token %}
@@ -20,4 +18,5 @@ Edit Profile
 		<button type="submit" class="btn btn-outline-primary">Save Changes</button>
 	</form>
 </div>
+
 {% endblock %}
