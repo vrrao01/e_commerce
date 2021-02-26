@@ -14,9 +14,10 @@ class RegistrationForm(UserCreationForm):
 	# address= forms.CharField(required=False,widget=forms.Textarea(attrs={'rows':3}),label="Delivery Address")
 	user_type = forms.ChoiceField(required=True,widget=forms.RadioSelect,choices= GROUP_CHOICES,label="Sign Up As")
 	first_name = forms.CharField(required=True,max_length=20)
+	email = forms.EmailField(required=True)
 	class Meta:
 		model = User
-		fields = ['first_name','last_name','username','password1','password2','user_type']
+		fields = ['first_name','last_name','username','password1','password2','user_type','email']
 	def __init__(self,*args,**kwargs):
 		super().__init__(*args,**kwargs)
 		self.helper=FormHelper()
@@ -26,9 +27,12 @@ class RegistrationForm(UserCreationForm):
 					Column('last_name',css_class='form-group col-md-6 mb-0'),
 					),
 				Row(
-					Column('username', css_class='form-group col-md-4 mb-0'),
-					Column('password1', css_class='form-group col-md-4 mb-0'),
-					Column('password2', css_class='form-group col-md-4 mb-0')
+					Column('username',css_class='form-group col-md-6 mb-0'),
+					Column('email',css_class='form-group col-md-6 mb-0'),
+					),
+				Row(
+					Column('password1', css_class='form-group col-md-6 mb-0'),
+					Column('password2', css_class='form-group col-md-6 mb-0')
 					),
 				Row(
 					Column(InlineRadios('user_type'),css_class='form-group col-md-6 mb-0 container')
