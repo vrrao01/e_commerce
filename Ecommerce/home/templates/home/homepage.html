@@ -52,7 +52,7 @@ Homepage
               <img class="card-img-top" src="{{product.image.url}}">
               <div class="card-body">
                 <h4 class="card-title">
-                  <a href="#">{{product.name}}</a>
+                  <a href="{% url 'home:product_detail' pk=product.id%}">{{product.name}}</a>
                 </h4>
                 <span class="badge badge-primary">{{product.category.name}}</span>
                 <h5>{{product.price|floatformat:2}}</h5>
