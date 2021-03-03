@@ -1,0 +1,41 @@
+{%extends "home/base.html"%}
+
+
+{%block title_name%}
+{{given_cat.name}}
+{% endblock%}
+
+{%block content%}
+{% include "home/sidebar.html" with list=categories%}
+
+<div class="col-lg-9">
+	<div class="container">
+		<h2>{{given_cat.name}}</h2>
+	</div>
+
+	{% for product in given_cat.product_set.all %}
+	<div class="col-lg-4 col-md-6 mb-4">
+	  <div class="card h-100">
+	    <img class="card-img-top" src="{{product.image.url}}">
+	    <div class="card-body">
+	      <h4 class="card-title">
+	        <a href="{% url 'home:product_detail' pk=product.id%}">{{product.name}}</a>
+	      </h4>
+	      <span class="badge badge-primary">{{product.category.name}}</span>
+	      <h5>{{product.price|floatformat:2}}</h5>
+	    </div>
+	    <div class="card-footer">
+	      <button class="btn btn-primary p-1">
+	        <i class="fa fa-cart-plus" aria-hidden="true"></i>
+	        Add to Cart
+	      </button>
+	    </div>
+	  </div>
+	</div>
+	{% empty %}
+	<div class="alert alert-warning"> No products found in this category</div>
+	{% endfor %}
+
+</div>
+
+{%endblock%}

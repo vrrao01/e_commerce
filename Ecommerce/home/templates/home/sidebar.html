@@ -3,7 +3,7 @@
         <h1 class="my-4">Shop Name</h1>
         <div class="list-group list-group-flush">
         	{% for category in list %}
-          <a href="#" class="list-group-item list-group-item-action list-group-item-info">{{category.name}}</a>
+          <a href="{% url 'home:category_list' slug=category.slug%}" class="list-group-item list-group-item-action list-group-item-info">{{category.name}}</a>
           {%endfor%}
           
         </div>
