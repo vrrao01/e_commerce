@@ -110,3 +110,33 @@ def addproduct(request,productid):
 		#store cart_id in session
 
 #TODO: Make sure the cart view has merge order function called
+
+def cartlist(request):
+	if (request.user.is_authenticated):
+		curUser = get_user(request)
+		if('cartid' in request.session):
+			cartid = request.session.get('cartid')
+			sessionCart = Order.objects.get(pk = cartid)
+			if(Order.objects.filter(placed = False,customer = curUser).exists()):
+				storedCart = Order.objects.all().filter(placed = False)[0]
+				if(storedCart.id != sessionCart.id):
+					merge_orders(cartid,storedCart.id)
+					request.session['cartid'] = storedCart.id
+			else:
+				sessionCart.customer = curUser
+				sessionCart.save()
+		else:
+			if(Order.objects.filter(placed = False, customer=curUser).exists()):
+				storedOrder = Order.objects.filter(placed = False,customer = curUser)[0]
+				request.session['cartid'] = storedOrder.id
+	context = {}
+	cartID = None
+	if('cartid' in request.session):
+		cartID = request.session.get('cartid')
+	context['cart'] = OrderItem.objects.filter(order_id = cartID)
+	if(context['cart'].exists()):
+		context['empty'] = False
+	else:
+		context['empty'] = True
+
+	return render(request,'cart.html',context)

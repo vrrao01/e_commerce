@@ -1,0 +1,41 @@
+{% extends 'home/base.html' %}
+
+{% block title_name %}
+Your Cart
+{% endblock %}
+
+
+{% block nav_cart %}
+active
+{% endblock %}
+
+{% block content %}
+<h1>Cart</h1>
+
+{% if empty %}
+	<div class="alert alert-light" role="alert">
+	  Your cart is empty!
+	</div>
+{% else %}
+<table class="table table-borderless table-hover">
+  <tbody>
+    	{% for orderitem in cart %}
+    	    <tr class="text-center">
+    		<td style="width:10%"><img src="{{orderitem.product.image.url}}" class="img-thumbnail" style="max-height: 100px;"></td>
+    		<td><a href="{% url 'home:product_detail' pk=orderitem.product.id %}">{{orderitem.product.name}}</a></td>
+    		<td>{{orderitem.quantity}}</td>
+    		<td>
+    			<button class="btn btn-danger btn-sm"> 
+    				<i class="far fa-trash-alt"></i>
+    				Remove 
+    			</button>
+    		</td>
+    		</tr>
+    	{% endfor %}
+  </tbody>
+</table>
+
+{% endif %}
+
+{% endblock %}
+

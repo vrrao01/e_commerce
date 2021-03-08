@@ -31,6 +31,12 @@ class Order(models.Model):
 	def __str__(self):
 		return f"Order-{self.id}"
 
+	@property
+	def itemcount(self):
+		count = OrderItem.objects.filter(order = self).count()
+		return count
+	
+
 class OrderItem(models.Model):
 	product = models.ForeignKey(Product,on_delete=models.SET_NULL,null=True)
 	order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
