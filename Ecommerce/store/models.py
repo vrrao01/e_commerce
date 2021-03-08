@@ -33,7 +33,10 @@ class Order(models.Model):
 
 	@property
 	def itemcount(self):
-		count = OrderItem.objects.filter(order = self).count()
+		queryset = OrderItem.objects.filter(order = self)
+		count = 0
+		for oi in queryset:
+			count += oi.quantity
 		return count
 	
 
