@@ -1,5 +1,5 @@
 from django.db import models
-from accounts.models import UserProfile
+from django.contrib.auth.models import User
 # Create your models here.
 
 class Category(models.Model):
@@ -24,8 +24,8 @@ class Product(models.Model):
 		return self.name
 
 class Order(models.Model):
-	customer = models.ForeignKey(UserProfile,on_delete=models.SET_NULL,null=True)
-	completed = models.BooleanField(default=False,null=False,blank=False)
+	customer = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
+	placed = models.BooleanField(default=False,null=False,blank=False)
 	transaction_id = models.CharField(max_length=200,null=True)
 
 	def __str__(self):

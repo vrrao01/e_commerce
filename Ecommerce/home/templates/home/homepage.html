@@ -58,10 +58,13 @@ Homepage
                 <h5>{{product.price|floatformat:2}}</h5>
               </div>
               <div class="card-footer">
-                <button class="btn btn-primary p-1">
-                  <i class="fa fa-cart-plus" aria-hidden="true"></i>
-                  Add to Cart
-                </button>
+                <form action="{% url 'add_product' productid=product.id%}" method='post'>
+                  {% csrf_token %}
+                  <button class="btn btn-primary p-1" type='submit'>
+                    <i class="fa fa-cart-plus" aria-hidden="true"></i>
+                    Add to Cart
+                  </button>
+                </form>
               </div>
             </div>
           </div>
