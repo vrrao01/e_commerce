@@ -35,10 +35,10 @@
 <body class="d-flex flex-column min-vh-100">
 
   <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark bg-info fixed-top py-0">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
-        <img src="http://placehold.it/30x30" alt="Logo" width="30" height="30">
+      <a class="navbar-brand" href="{% url 'home:homepage' %}">
+        <img src="{% static 'navbarlogo.png' %}" alt="Logo" width="50" height="50">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
