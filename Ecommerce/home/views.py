@@ -59,6 +59,10 @@ class ProductDetail(DetailView):
 
 		context = super().get_context_data(**kwargs)
 		context['categories'] = list(Category.objects.all())
+		cartcount = 0
+		if('cartid' in self.request.session):
+			cartcount = Order.objects.get(id = self.request.session.get('cartid')).itemcount
+		context['cartcount'] = cartcount
 		return context
 
 class CategoryList(DetailView):
@@ -67,13 +71,17 @@ class CategoryList(DetailView):
 	model = Category
 	template_name = 'home/category.html'
 
+
 	def get_queryset(self,**kwargs):
 		print("given slug",self.kwargs['slug'])
 		return Category.objects.all().filter(slug = self.kwargs['slug'])
 
 
 	def get_context_data(self,**kwargs):
-
 		context = super().get_context_data(**kwargs)
 		context['categories'] = list(Category.objects.all())
+		cartcount = 0
+		if('cartid' in self.request.session):
+			cartcount = Order.objects.get(id = self.request.session.get('cartid')).itemcount
+		context['cartcount'] = cartcount
 		return context

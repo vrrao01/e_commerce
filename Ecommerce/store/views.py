@@ -139,4 +139,9 @@ def cartlist(request):
 	else:
 		context['empty'] = True
 
+	cartcount = 0
+	if('cartid' in request.session):
+		cartcount = Order.objects.get(id = request.session.get('cartid')).itemcount
+	context['cartcount'] = cartcount
+
 	return render(request,'cart.html',context)
