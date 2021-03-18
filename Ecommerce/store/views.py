@@ -3,6 +3,7 @@ from django.views.generic.detail import DetailView
 from .models import Product,Category,Order,OrderItem
 from django.contrib.auth import get_user
 from django.views.decorators.http import require_POST
+from .forms import UpdateProductQuantityForm
 
 # Create your views here.
 def add_to_order(cartid,productid,quantity=1):
@@ -139,9 +140,33 @@ def cartlist(request):
 	else:
 		context['empty'] = True
 
+	context['form'] = []
+	for x in context['cart']:
+		form = UpdateProductQuantityForm(initial={'quantity':str(x.quantity)})
+		context['form'].append(form)
+	context['cart'] = zip(context['cart'],context['form'])
 	cartcount = 0
 	if('cartid' in request.session):
 		cartcount = Order.objects.get(id = request.session.get('cartid')).itemcount
 	context['cartcount'] = cartcount
 
 	return render(request,'cart.html',context)
+
+
+
+
+@require_POST
+def updatecart(request,oi_id):
+	form = UpdateProductQuantityForm(request.POST)
+	oi = OrderItem.objects.get(id = oi_id)
+	if(form.is_valid()):
+		oi.quantity = form.cleaned_data['quantity']
+		oi.save()
+	return redirect('cartlist')
+
+
+@require_POST
+def deleteorderitem(request,oi_id):
+	oi = OrderItem.objects.get(id = oi_id)
+	oi.delete()
+	return redirect('cartlist')

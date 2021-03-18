@@ -1,5 +1,10 @@
 {% extends 'home/base.html' %}
 
+{% load cart_extras %}
+
+{% load crispy_forms_tags %}
+
+
 {% block title_name %}
 Your Cart
 {% endblock %}
@@ -19,16 +24,31 @@ active
 {% else %}
 <table class="table table-borderless table-hover">
   <tbody>
-    	{% for orderitem in cart %}
+    	{% for orderitem,form in cart %}
     	    <tr class="text-center">
     		<td style="width:10%"><img src="{{orderitem.product.image.url}}" class="img-thumbnail" style="max-height: 100px;"></td>
     		<td><a href="{% url 'home:product_detail' pk=orderitem.product.id %}">{{orderitem.product.name}}</a></td>
-    		<td>{{orderitem.quantity}}</td>
     		<td>
-    			<button class="btn btn-danger btn-sm"> 
-    				<i class="far fa-trash-alt"></i>
-    				Remove 
-    			</button>
+    			<form method='post' action="{% url 'update_cart' oi_id=orderitem.id %}">
+    				{% csrf_token %}
+    				<div class="row">
+    					<div class="col mx-0 px-0">
+    						{{form.quantity|as_crispy_field}}
+    					</div>
+    					<div class="col mx-0 px-0">
+    						<input type='submit' value='Update' class='btn btn-sm btn-success'>
+    					</div>
+    				</div>
+    			</form>
+    		</td>
+    		<td>
+    			<form method='post' action="{% url 'delete_order_item' oi_id=orderitem.id %}">
+    				{% csrf_token %}
+    				<button type="submit" class="btn btn-danger btn-sm"> 
+    					<i class="far fa-trash-alt"></i>
+    					Remove 
+    				</button>
+    			</form>
     		</td>
     		</tr>
     	{% endfor %}
