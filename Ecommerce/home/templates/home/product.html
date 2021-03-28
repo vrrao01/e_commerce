@@ -20,6 +20,14 @@
 			<span class="small p-1 border border-info rounded-lg">{{product.category}}</span>
 			<h5 class="mt-3">Product Description</h5>
 			<p>{{product.description|linebreaks}}</p>
+			<form method="post" action="{% url  'add_product' productid=product.id %}">
+				{% csrf_token %}
+				<button type='submit' class='btn btn-primary'>
+					<i class="fa fa-cart-plus" aria-hidden="true"></i>
+					Add to Cart 
+				</button>
+				
+			</form>
 		</div>
 
 

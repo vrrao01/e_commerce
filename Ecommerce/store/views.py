@@ -83,7 +83,8 @@ def addproduct(request,productid):
 			newCart = Order.objects.create(placed = False)
 			add_to_order(newCart.id,productid,1)
 			request.session['cartid'] = newCart.id
-	return redirect('home:homepage')
+	return redirect(request.META.get('HTTP_REFERER')
+)
 		
 #if request.user.is_authenticated():
 	#if cart_id in session

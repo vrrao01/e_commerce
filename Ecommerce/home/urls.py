@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
-from .views import Homepage,ProductDetail,CategoryList
+from django.views.decorators.http import require_GET
+from .views import Homepage,ProductDetail,CategoryList,SearchList
 app_name = "home"
 urlpatterns = [
     path('', Homepage.as_view(),name="homepage"),
     path('product/<int:pk>/',ProductDetail.as_view(),name="product_detail"),
     path('category/<str:slug>/',CategoryList.as_view(),name="category_list"),
+    path('search/',require_GET(SearchList.as_view()),name="search_products")
 ]

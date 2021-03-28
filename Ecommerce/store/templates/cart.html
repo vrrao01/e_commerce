@@ -1,6 +1,5 @@
 {% extends 'home/base.html' %}
 
-{% load cart_extras %}
 
 {% load crispy_forms_tags %}
 
@@ -15,18 +14,28 @@ active
 {% endblock %}
 
 {% block content %}
-<h1>Cart</h1>
+<div class="container">
+    <h1>Cart</h1>
+</div>
 
 {% if empty %}
-	<div class="alert alert-light" role="alert">
+	<div class="alert alert-warning" role="alert">
 	  Your cart is empty!
 	</div>
 {% else %}
 <table class="table table-borderless table-hover">
+<!--     <thead>
+        <tr>
+            <th class="d-md-none d-lg-block"></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead> -->
   <tbody>
     	{% for orderitem,form in cart %}
     	    <tr class="text-center">
-    		<td style="width:10%"><img src="{{orderitem.product.image.url}}" class="img-thumbnail" style="max-height: 100px;"></td>
+    		<td ><img src="{{orderitem.product.image.url}}" class="img-thumbnail d-none d-sm-none d-md-block" style="max-height: 100px;"></td>
     		<td><a href="{% url 'home:product_detail' pk=orderitem.product.id %}">{{orderitem.product.name}}</a></td>
     		<td>
     			<form method='post' action="{% url 'update_cart' oi_id=orderitem.id %}">
@@ -35,7 +44,7 @@ active
     					<div class="col mx-0 px-0">
     						{{form.quantity|as_crispy_field}}
     					</div>
-    					<div class="col mx-0 px-0">
+    					<div class="col">
     						<input type='submit' value='Update' class='btn btn-sm btn-success'>
     					</div>
     				</div>

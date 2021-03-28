@@ -85,3 +85,24 @@ class CategoryList(DetailView):
 			cartcount = Order.objects.get(id = self.request.session.get('cartid')).itemcount
 		context['cartcount'] = cartcount
 		return context
+
+class SearchList(ListView):
+	context_object_name = 'results'
+	template_name = 'home/search.html'
+	model = Product
+
+	def get_context_data(self,**kwargs):
+		context = super().get_context_data(**kwargs)
+		context['categories'] = list(Category.objects.all())
+		cartcount = 0
+		if('cartid' in self.request.session):
+			cartcount = Order.objects.get(id = self.request.session.get('cartid')).itemcount
+		context['cartcount'] = cartcount
+		return context
+
+	def get_queryset(self,**kwargs):
+		keyword = self.request.GET.get('product_query')
+		results = Product.objects.none()
+		if(keyword):
+			results = Product.objects.filter(name__icontains=keyword)
+		return results

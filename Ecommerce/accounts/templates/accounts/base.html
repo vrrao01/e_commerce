@@ -43,9 +43,9 @@
               <!-- <span class="sr-only">(current)</span> -->
             </a>
           </li>
-          <li class="nav-item {%block nav_shop%}{%endblock%}">
+<!--           <li class="nav-item {%block nav_shop%}{%endblock%}">
             <a class="nav-link" href="#">Shop</a>
-          </li>
+          </li> -->
           <li class="nav-item {%block nav_account%}{%endblock%}">
             <a class="nav-link" href="#">
               {% if user.is_authenticated %}
@@ -57,13 +57,13 @@
             </a>
           </li>
           <li class="nav-item {%block nav_cart%}{%endblock%}">
-            <a class="nav-link" href="#">
+<!--             <a class="nav-link" href="#">
               Cart <i class="fas fa-shopping-cart"></i>
             </a>
-          </li>
+ -->          </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0 ">
-          <input class="form-control mr-sm-2" type="search" placeholder="Search Product">
+        <form method = "get" class="form-inline my-2 my-lg-0 " action="{% url 'home:search_products' %}">
+          <input class="form-control mr-sm-2" type="search" placeholder="Search Product" name="product_query">
           <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
         </form>
       </div>
