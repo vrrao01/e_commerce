@@ -27,7 +27,6 @@ class Order(models.Model):
 	customer = models.ForeignKey(User,on_delete=models.SET_NULL,null=True)
 	placed = models.BooleanField(default=False,null=False,blank=False)
 	transaction_id = models.CharField(max_length=200,null=True)
-
 	def __str__(self):
 		return f"Order-{self.id}"
 
@@ -38,6 +37,15 @@ class Order(models.Model):
 		for oi in queryset:
 			count += oi.quantity
 		return count
+
+	@property
+	def grandtotal(self):
+		queryset = OrderItem.objects.filter(order = self)
+		total = 0
+		for oi in queryset:
+			total += oi.orderitemtotal
+		return total
+	
 	
 
 class OrderItem(models.Model):
@@ -45,6 +53,12 @@ class OrderItem(models.Model):
 	order = models.ForeignKey(Order,on_delete=models.SET_NULL,null=True)
 	quantity = models.IntegerField(default=0,null=True,blank=True)
 	date_added = models.DateTimeField(auto_now_add=True)
+
+	@property
+	def orderitemtotal(self):
+		oitotal = self.product.price * self.quantity
+		return oitotal
+	
 
 	def __str__(self):
 		return f"{self.product.name}-Order-{self.order.id}"
